@@ -39,6 +39,8 @@ public class Person{
 	protected String title;
 
 	protected int phone;
+	
+	protected String email;
 
 	/**
 	* Notification preferences
@@ -135,6 +137,9 @@ public class Person{
 	*/
 	public int getPhone(){
 		return this.phone;
+	}
+	public String getEmail(){
+		return this.email;
 	}
 	/**
 	* Get person's notification preference
