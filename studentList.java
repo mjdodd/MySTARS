@@ -147,6 +147,8 @@ public class studentList {
 	public void sendNotification(Integer ID, int ind){
 		Student s = findStudentByID(ID);
 		if(s.getNotPref() == Person.NOTIFICATION.MAIL)
+			SendEmail send = new SendEmail();
+			send.createMessage(s.getEmail() , ind);
 			System.out.println("MAIL SENT!");
 		else if(s.getNotPref() == Person.NOTIFICATION.PHONE)
 			System.out.println("Send text message");	
