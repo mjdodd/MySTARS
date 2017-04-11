@@ -1,31 +1,39 @@
-import java.util.*;
-import javax.mail.*; // think you need a extra thing on computer to run
-import javax.mail.internet.*; // same as above
-import javax.activation.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 public class SendEmail {
 
-   public static void main(String [] args) {    
-      // Recipient's email ID needs to be mentioned.
-      String to  ; //need to get student's email
+    public static void createMessage(String semail, int ind) {
+     
+      String course = CourseList.findCourseByIndex(ind).getCourseCode(); 
+      String to = semail;
 
-      // Sender's email ID needs to be mentioned
-      String from = "web@ntu.edu.sg";
+      String from = "ce2002javamagic@gmail.com"
+      final String username = "ce2002javamagic"
+      final String password = "mattsigrid"
 
-      // Assuming you are sending email from localhost
-      // What is this?
-      String host = "localhost";
-
-      // Get system properties
-      Properties properties = System.getProperties();
-
-      // Setup mail server
-      properties.setProperty("mail.smtp.host", host);
-
-      // Get the default Session object.
-      Session session = Session.getDefaultInstance(properties);
       
-      String courseCode ;//need to get coursecode
+      String host = "smtp.gmail.com";
+
+      Properties props = new Properties();
+      props.put("mail.smtp.auth", "true");
+      props.put("mail.smtp.starttls.enable", "true");
+      props.put("mail.smtp.host", host);
+      props.put("mail.smtp.port", "587");
+
+   
+      Session session = Session.getInstance(props,
+      new javax.mail.Authenticator() {
+         protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(username, password);
+         }
+      });
 
       try {
          // Create a default MimeMessage object.
@@ -41,7 +49,7 @@ public class SendEmail {
          message.setSubject("Waitlist notification");
 
          // Now set the actual message
-         message.setText("You have been registered to "	+ courseCode ); //need to get courseCode from somewhere
+         message.setText("You have been registered to "	+ course ); //need to get courseCode from somewhere
 
          // Send message
          Transport.send(message);
